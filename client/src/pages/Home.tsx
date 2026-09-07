@@ -16,6 +16,8 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useHeroParticles } from "../hooks/useHeroParticles";
+import LogoMarquee from "../components/LogoMarquee";
+import PortfolioShowcase from "../components/PortfolioShowcase";
 
 // ── Motion System ──────────────────────────────────────────────────────────────
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -50,6 +52,7 @@ const flowUrl = "/nova-orbit-product-flow.jpg";
 
 const navItems = [
   { label: "About", target: "about" },
+  { label: "Portfolio", target: "portfolio" },
   { label: "Services", target: "platform" },
   { label: "Process", target: "solutions" },
   { label: "Why VENUS", target: "why" },
@@ -187,6 +190,10 @@ export default function Home() {
 
         <div className="scroll-cue" aria-hidden="true"><span /> Cuộn để khám phá</div>
       </section>
+
+      <LogoMarquee />
+
+      <PortfolioShowcase />
 
       <section className="split-panel-section bg-about-philosophy" id="about">
         <div className="split-panel__container">
