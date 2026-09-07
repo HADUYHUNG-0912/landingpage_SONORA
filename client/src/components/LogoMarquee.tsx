@@ -181,6 +181,65 @@ export default function LogoMarquee() {
         .lm-jump-btn:hover svg {
           transform: translateY(2px);
         }
+        .lm-jump-btn:active {
+          transform: scale(0.96);
+        }
+
+        /* Mobile Breakpoint (<= 768px) */
+        @media (max-width: 768px) {
+          .lm-section {
+            padding: 48px 0;
+          }
+          .lm-title {
+            font-size: 11px;
+            letter-spacing: .18em;
+            margin: 0 0 24px;
+          }
+          .lm-card {
+            height: 64px;
+            padding: 0 18px;
+            border-radius: 10px;
+          }
+          .lm-logo {
+            height: 38px;
+          }
+          .lm-track {
+            gap: 16px;
+            animation-duration: 55s;
+          }
+          .lm-cta-wrap {
+            margin-top: 24px;
+            padding: 0 16px;
+          }
+          .lm-jump-btn {
+            padding: 9px 18px;
+            font-size: 12px;
+            max-width: 100%;
+          }
+        }
+
+        /* Small Mobile (<= 420px) */
+        @media (max-width: 420px) {
+          .lm-section {
+            padding: 42px 0;
+          }
+          .lm-card {
+            height: 56px;
+            padding: 0 14px;
+            border-radius: 8px;
+          }
+          .lm-logo {
+            height: 32px;
+          }
+          .lm-track {
+            gap: 12px;
+          }
+          .lm-jump-btn {
+            font-size: 11px;
+            padding: 8px 14px;
+            gap: 6px;
+          }
+        }
       `}</style>
 
       <h2 className="lm-title">Đối tác &amp; Khách hàng</h2>

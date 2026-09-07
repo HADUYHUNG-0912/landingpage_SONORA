@@ -87,6 +87,32 @@ export default function PortfolioShowcase() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const activeProject = PROJECTS[currentIndex];
 
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 45;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrev();
+    }
+  };
+
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % PROJECTS.length);
   };
@@ -121,9 +147,25 @@ export default function PortfolioShowcase() {
 
         {/* Main Showcase Card */}
         <div className="showcase-card">
+          {/* Mobile-only header (Tag + Title on top for immediate context) */}
+          <div className="showcase-mobile-header">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeProject.id}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22 }}
+              >
+                <div className="project-tag-pill">{activeProject.tag}</div>
+                <h3 className="project-title">{activeProject.title}</h3>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
           <div className="showcase-layout">
             
-            {/* Left Column: Project Details */}
+            {/* Left Column: Project Details (Desktop) / Specs below preview (Mobile) */}
             <div className="showcase-info">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -134,9 +176,10 @@ export default function PortfolioShowcase() {
                   transition={{ duration: 0.3 }}
                   className="showcase-info-content"
                 >
-                  <div className="project-tag-pill">{activeProject.tag}</div>
-                  
-                  <h3 className="project-title">{activeProject.title}</h3>
+                  <div className="desktop-only-heading">
+                    <div className="project-tag-pill">{activeProject.tag}</div>
+                    <h3 className="project-title">{activeProject.title}</h3>
+                  </div>
                   
                   <p className="project-target">
                     <strong>Giải pháp cho:</strong> {activeProject.targetAudience}
@@ -166,14 +209,31 @@ export default function PortfolioShowcase() {
                       {activeProject.ctaText}
                       <ArrowUpRight size={18} />
                     </button>
+                    
+                    {/* Mobile-only more projects link placed naturally after CTA */}
+                    <a
+                      href="#contact"
+                      className="more-projects-link mobile-more-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      Xem thêm các giải pháp khác <span>→</span>
+                    </a>
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            {/* Center Area: Large Preview Display with Arrows */}
+            {/* Center Area: Large Preview Display with Arrows and Touch Swipe */}
             <div className="showcase-preview-wrap">
-              <div className="preview-screen">
+              <div 
+                className="preview-screen"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={activeProject.image}
@@ -220,7 +280,7 @@ export default function PortfolioShowcase() {
               </div>
             </div>
 
-            {/* Right Column: Vertical Thumbnails Strip */}
+            {/* Right Column: Vertical Thumbnails Strip (Desktop) / Horizontal Touch Grid (Mobile) */}
             <div className="showcase-thumbnails-col">
               <div className="thumb-arrow-wrap">
                 <button
@@ -262,9 +322,10 @@ export default function PortfolioShowcase() {
                 </button>
               </div>
 
+              {/* Desktop more projects link */}
               <a
                 href="#contact"
-                className="more-projects-link"
+                className="more-projects-link desktop-more-link"
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
@@ -299,32 +360,32 @@ export default function PortfolioShowcase() {
         }
 
         .portfolio-header {
-          margin-bottom: 44px;
+          margin-bottom: 40px;
         }
 
         .portfolio-badge {
           display: inline-flex;
           align-items: center;
-          gap: 9px;
-          padding: 8px 18px;
+          gap: 8px;
+          padding: 6px 14px;
           border-radius: 999px;
           background: rgba(59, 130, 246, 0.1);
           border: 1px solid rgba(59, 130, 246, 0.25);
           color: #93c5fd;
-          font-size: 14px;
+          font-size: 12px;
           font-weight: 600;
           letter-spacing: .12em;
           text-transform: uppercase;
-          margin-bottom: 18px;
+          margin-bottom: 14px;
         }
 
         .portfolio-headline {
-          font-size: clamp(40px, 4.8vw, 68px);
+          font-size: clamp(30px, 3.6vw, 48px);
           font-weight: 500;
-          line-height: 1.12;
-          letter-spacing: -.04em;
+          line-height: 1.15;
+          letter-spacing: -.035em;
           color: #fcfbfe;
-          margin: 0 0 16px;
+          margin: 0 0 14px;
         }
 
         .portfolio-headline em {
@@ -333,10 +394,10 @@ export default function PortfolioShowcase() {
         }
 
         .portfolio-subline {
-          max-width: 760px;
+          max-width: 660px;
           color: #9d9aa8;
-          font-size: 19px;
-          line-height: 1.65;
+          font-size: 15.5px;
+          line-height: 1.6;
           margin: 0;
         }
 
@@ -350,6 +411,14 @@ export default function PortfolioShowcase() {
           box-shadow: 
             0 24px 60px rgba(0, 0, 0, 0.45),
             inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Mobile-only header is hidden on desktop */
+        .showcase-mobile-header {
+          display: none;
+        }
+        .desktop-only-heading {
+          display: block;
         }
 
         .showcase-layout {
@@ -368,33 +437,33 @@ export default function PortfolioShowcase() {
 
         .project-tag-pill {
           display: inline-block;
-          padding: 6px 14px;
+          padding: 4px 12px;
           border-radius: 8px;
           background: rgba(107, 61, 255, 0.18);
           border: 1px solid rgba(154, 133, 255, 0.3);
           color: #c4b5fd;
-          font-size: 14px;
+          font-size: 11.5px;
           font-weight: 600;
           letter-spacing: .05em;
           text-transform: uppercase;
-          margin-bottom: 18px;
+          margin-bottom: 14px;
           width: fit-content;
         }
 
         .project-title {
-          font-size: clamp(28px, 2.8vw, 42px);
+          font-size: clamp(22px, 2.2vw, 32px);
           font-weight: 600;
           line-height: 1.25;
           color: #ffffff;
-          margin: 0 0 18px;
+          margin: 0 0 14px;
           letter-spacing: -.02em;
         }
 
         .project-target {
-          font-size: 18px;
+          font-size: 14.5px;
           color: #cfcdd9;
           line-height: 1.6;
-          margin: 0 0 12px;
+          margin: 0 0 10px;
         }
 
         .project-target strong, .project-purpose strong {
@@ -403,29 +472,29 @@ export default function PortfolioShowcase() {
         }
 
         .project-purpose {
-          font-size: 18px;
+          font-size: 14.5px;
           color: #a8a5b6;
           line-height: 1.6;
-          margin: 0 0 24px;
+          margin: 0 0 20px;
         }
 
         .project-checklist {
           display: flex;
           flex-direction: column;
-          gap: 14px;
-          margin-bottom: 32px;
+          gap: 11px;
+          margin-bottom: 26px;
         }
 
         .checklist-item {
           display: flex;
           align-items: flex-start;
-          gap: 12px;
+          gap: 10px;
         }
 
         .check-icon-wrap {
           flex-shrink: 0;
-          width: 26px;
-          height: 26px;
+          width: 22px;
+          height: 22px;
           border-radius: 50%;
           background: rgba(59, 130, 246, 0.2);
           border: 1px solid rgba(96, 165, 250, 0.4);
@@ -440,19 +509,20 @@ export default function PortfolioShowcase() {
         }
 
         .check-text {
-          font-size: 18px;
+          font-size: 14px;
           color: #d1d0db;
-          line-height: 1.55;
+          line-height: 1.5;
         }
 
         .project-actions {
-          margin-top: 8px;
+          margin-top: 6px;
         }
 
         .project-cta-btn {
-          min-height: 56px;
-          padding: 0 30px;
-          font-size: 17px;
+          min-height: 48px;
+          padding: 0 24px;
+          font-size: 14.5px;
+          transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
         }
 
         /* Center preview screen */
@@ -472,6 +542,8 @@ export default function PortfolioShowcase() {
           background: #02040a;
           border: 1px solid rgba(255, 255, 255, 0.15);
           box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+          touch-action: pan-y;
+          user-select: none;
         }
 
         .preview-image {
@@ -479,6 +551,7 @@ export default function PortfolioShowcase() {
           height: 100%;
           object-fit: cover;
           display: block;
+          pointer-events: none;
         }
 
         /* Arrow navigation */
@@ -505,6 +578,10 @@ export default function PortfolioShowcase() {
           background: rgba(37, 99, 235, 0.9);
           border-color: #93c5fd;
           transform: translateY(-50%) scale(1.08);
+        }
+
+        .nav-arrow:active {
+          transform: translateY(-50%) scale(0.95);
         }
 
         .nav-arrow--left {
@@ -587,7 +664,7 @@ export default function PortfolioShowcase() {
           border: 2px solid transparent;
           cursor: pointer;
           opacity: 0.55;
-          transition: opacity .22s ease, transform .22s ease, border-color .22s ease;
+          transition: opacity .22s ease, transform .22s ease, border-color .22s ease, box-shadow .22s ease;
           padding: 0;
         }
 
@@ -612,7 +689,7 @@ export default function PortfolioShowcase() {
 
         .more-projects-link {
           margin-top: 12px;
-          font-size: 15px;
+          font-size: 13.5px;
           font-weight: 600;
           color: #93c5fd;
           text-decoration: none;
@@ -628,20 +705,31 @@ export default function PortfolioShowcase() {
           gap: 7px;
         }
 
-        /* Responsive */
-        @media (max-width: 1100px) {
+        .mobile-more-link {
+          display: none;
+        }
+        .desktop-more-link {
+          display: inline-flex;
+        }
+
+        /* ── Breakpoint: Tablet (769px – 1100px) ────────────────────────── */
+        @media (max-width: 1100px) and (min-width: 769px) {
           .showcase-layout {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 32px;
           }
           .showcase-thumbnails-col {
             grid-column: span 2;
             flex-direction: row;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            margin-top: 10px;
           }
           .thumbnails-list {
             flex-direction: row;
             width: auto;
+            gap: 12px;
           }
           .thumbnail-item {
             width: 120px;
@@ -651,26 +739,248 @@ export default function PortfolioShowcase() {
           }
         }
 
+        /* ── Breakpoint: Mobile (<= 768px) ──────────────────────────────── */
         @media (max-width: 768px) {
+          .portfolio-section {
+            padding: clamp(52px, 8vw, 70px) 16px;
+          }
+
+          .portfolio-header {
+            margin-bottom: 24px;
+          }
+
+          .portfolio-badge {
+            font-size: 11px;
+            padding: 4px 11px;
+            gap: 5px;
+            margin-bottom: 12px;
+          }
+
+          .portfolio-headline {
+            font-size: clamp(22px, 5.8vw, 28px);
+            line-height: 1.2;
+            letter-spacing: -.03em;
+            margin-bottom: 12px;
+          }
+
+          .portfolio-subline {
+            font-size: 13.5px;
+            line-height: 1.6;
+          }
+
+          /* Compact Bento Card */
+          .showcase-card {
+            border-radius: 20px;
+            padding: 20px 14px;
+          }
+
+          /* Show tag & title directly on top of mockup */
+          .showcase-mobile-header {
+            display: block;
+            margin-bottom: 16px;
+          }
+          .desktop-only-heading {
+            display: none;
+          }
+
+          .showcase-mobile-header .project-tag-pill {
+            font-size: 10.5px;
+            padding: 3px 9px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+          }
+
+          .showcase-mobile-header .project-title {
+            font-size: clamp(18px, 4.6vw, 22px);
+            line-height: 1.28;
+            margin-bottom: 0;
+          }
+
+          /* Mobile layout order: 1. Mockup Preview -> 2. Thumbnails switcher -> 3. Info details */
           .showcase-layout {
-            grid-template-columns: 1fr;
-            gap: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
           }
-          .showcase-thumbnails-col {
-            grid-column: span 1;
-            order: 3;
-          }
+
           .showcase-preview-wrap {
-            order: 2;
-          }
-          .showcase-info {
             order: 1;
+            width: 100%;
           }
+
+          .preview-screen {
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          }
+
+          .nav-arrow {
+            width: 36px;
+            height: 36px;
+          }
+          .nav-arrow--left {
+            left: 8px;
+          }
+          .nav-arrow--right {
+            right: 8px;
+          }
+
           .preview-dots {
             display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 10px;
           }
+          .preview-dot {
+            width: 6px;
+            height: 6px;
+          }
+          .preview-dot--active {
+            width: 18px;
+          }
+
+          /* Thumbnails strip: 4 equal touchable columns */
+          .showcase-thumbnails-col {
+            order: 2;
+            width: 100%;
+            margin-top: 2px;
+          }
+
+          .thumb-arrow-wrap {
+            display: none;
+          }
+
+          .thumbnails-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            width: 100%;
+          }
+
           .thumbnail-item {
-            width: 90px;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            border-radius: 8px;
+            opacity: 0.6;
+          }
+
+          .thumbnail-item--active {
+            opacity: 1;
+            transform: scale(1.02);
+            border-color: #60a5fa;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.45);
+          }
+
+          .thumbnail-item:active {
+            transform: scale(0.95);
+          }
+
+          .desktop-more-link {
+            display: none;
+          }
+
+          /* Project info details below thumbnails */
+          .showcase-info {
+            order: 3;
+            width: 100%;
+          }
+
+          .project-target {
+            font-size: 13px;
+            line-height: 1.55;
+            margin: 0 0 6px;
+          }
+
+          .project-purpose {
+            font-size: 13px;
+            line-height: 1.55;
+            margin: 0 0 14px;
+          }
+
+          .project-checklist {
+            gap: 8px;
+            margin-bottom: 18px;
+          }
+
+          .check-icon-wrap {
+            width: 20px;
+            height: 20px;
+            margin-top: 1px;
+          }
+
+          .check-icon {
+            width: 13px;
+            height: 13px;
+          }
+
+          .check-text {
+            font-size: 13px;
+            line-height: 1.45;
+          }
+
+          /* Action button: full width for effortless mobile thumb tapping */
+          .project-actions {
+            margin-top: 4px;
+          }
+
+          .project-cta-btn {
+            width: 100%;
+            min-height: 46px;
+            padding: 0 18px;
+            font-size: 13.5px;
+            justify-content: center;
+            border-radius: 12px;
+          }
+
+          .project-cta-btn:active {
+            transform: scale(0.98);
+          }
+
+          .mobile-more-link {
+            display: inline-flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 12px;
+            font-size: 12.5px;
+          }
+        }
+
+        /* ── Breakpoint: Small Mobile (<= 400px) ────────────────────────── */
+        @media (max-width: 400px) {
+          .portfolio-section {
+            padding: 44px 12px;
+          }
+
+          .showcase-card {
+            border-radius: 16px;
+            padding: 16px 10px;
+          }
+
+          .thumbnails-list {
+            gap: 6px;
+          }
+
+          .thumbnail-item {
+            border-radius: 6px;
+          }
+
+          .nav-arrow {
+            width: 30px;
+            height: 30px;
+          }
+
+          .nav-arrow svg {
+            width: 16px;
+            height: 16px;
+          }
+
+          .check-text {
+            font-size: 12px;
+          }
+
+          .project-cta-btn {
+            font-size: 13px;
+            min-height: 44px;
           }
         }
       `}</style>
