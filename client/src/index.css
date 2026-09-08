@@ -189,7 +189,7 @@ h1 em,h2 em { color: #c9c0ff; font-style: normal; }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
 
 /* =========================================================
-   VENUS MOTION SYSTEM
+   SONORA MOTION SYSTEM
    Only animate: transform, opacity (GPU-safe, no layout)
    ========================================================= */
 

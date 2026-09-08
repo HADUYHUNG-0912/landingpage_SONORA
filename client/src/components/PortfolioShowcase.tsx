@@ -123,12 +123,12 @@ export default function PortfolioShowcase() {
 
   const showContactToast = (projectName: string) => {
     toast.message(`Tư vấn giải pháp: ${projectName}`, {
-      description: "Đội ngũ kỹ thuật VENUS sẽ liên hệ và trao đổi giải pháp chi tiết cùng bạn.",
+      description: "Đội ngũ kỹ thuật Sonora sẽ liên hệ và trao đổi giải pháp chi tiết cùng bạn.",
     });
   };
 
   return (
-    <section className="portfolio-section" id="portfolio" aria-label="Dự án tiêu biểu VENUS">
+    <section className="portfolio-section" id="portfolio" aria-label="Dự án tiêu biểu Sonora">
       <div className="portfolio-container">
         
         {/* Section Header */}
@@ -141,7 +141,7 @@ export default function PortfolioShowcase() {
             Những sản phẩm số tạo ra <em>kết quả thực tế.</em>
           </h2>
           <p className="portfolio-subline">
-            Mỗi giải pháp được VENUS kiến tạo từ sự thấu hiểu bài toán cốt lõi của doanh nghiệp, mang lại hiệu quả vận hành và tăng trưởng bền vững.
+            Mỗi giải pháp được Sonora kiến tạo từ sự thấu hiểu bài toán cốt lõi của doanh nghiệp, mang lại hiệu quả vận hành và tăng trưởng bền vững.
           </p>
         </div>
 

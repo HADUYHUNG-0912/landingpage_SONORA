@@ -55,7 +55,7 @@ const navItems = [
   { label: "Portfolio", target: "portfolio" },
   { label: "Services", target: "platform" },
   { label: "Process", target: "solutions" },
-  { label: "Why VENUS", target: "why" },
+  { label: "Why Sonora", target: "why" },
   { label: "Contact", target: "contact" },
 ];
 
@@ -86,9 +86,9 @@ function scrollToSection(target: string) {
 
 function BrandMark({ inverse = false }: { inverse?: boolean }) {
   return (
-    <div className="brand-lockup" aria-label="VENUS">
+    <div className="brand-lockup" aria-label="Sonora">
       <img className={`brand-mark ${inverse ? "brand-mark--inverse" : ""}`} src={logoUrl} alt="" />
-      <span className="brand-wordmark">VE<span>NUS</span></span>
+      <span className="brand-wordmark">SONORA</span>
     </div>
   );
 }
@@ -172,7 +172,7 @@ export default function Home() {
         <div className="hero-content">
           <div className="eyebrow"><span className="eyebrow-dot" /> Công ty công nghệ / B2B</div>
           <h1>From Business Challenges<br /><em>to Digital Solutions.</em></h1>
-          <p>VENUS đồng hành cùng doanh nghiệp từ phân tích bài toán, xây dựng giải pháp đến phát triển và triển khai sản phẩm số thông qua một quy trình rõ ràng và minh bạch.</p>
+          <p>Sonora đồng hành cùng doanh nghiệp từ phân tích bài toán, xây dựng giải pháp đến phát triển và triển khai sản phẩm số thông qua một quy trình rõ ràng và minh bạch.</p>
           <div className="hero-actions">
             <button className="button button--primary button--large" type="button" onClick={() => goTo("contact")}>Trao đổi về dự án <ArrowDownRight size={18} /></button>
             <button className="button button--ghost button--large" type="button" onClick={() => goTo("solutions")}>Khám phá cách chúng tôi làm việc</button>
@@ -206,9 +206,9 @@ export default function Home() {
             whileInView="visible"
             viewport={VP}
           >
-            <span className="split-panel__eyebrow">01 ABOUT VENUS</span>
+            <span className="split-panel__eyebrow">01 ABOUT SONORA</span>
             <h2 className="split-panel__headline">Technology starts with<br/>understanding.</h2>
-            <p className="split-panel__intro">VENUS là một technology agency tại Việt Nam được xây dựng với một tư duy đơn giản:</p>
+            <p className="split-panel__intro">Sonora là một technology agency tại Việt Nam được xây dựng với một tư duy đơn giản:</p>
             <div className="split-panel__statement">Một sản phẩm tốt không bắt đầu<br/>từ việc viết code —<br/>mà bắt đầu từ việc <span className="headline-highlight">hiểu đúng vấn đề.</span></div>
             <p className="split-panel__supporting">Chúng tôi tiếp cận mỗi dự án từ bài toán kinh doanh, nhu cầu người dùng và mục tiêu vận hành trước khi đưa ra giải pháp công nghệ phù hợp.</p>
             <div className="split-panel__actions">
@@ -228,7 +228,7 @@ export default function Home() {
             <div className="dark-browser-panel">
               <div className="panel-topbar">
                 <div className="panel-dots"><i/><i/><i/></div>
-                <div className="panel-title">About.Venus</div>
+                <div className="panel-title">About.Sonora</div>
               </div>
               <div className="panel-body">
                 <div className="panel-intro">Core philosophy behind every project</div>
@@ -252,7 +252,7 @@ export default function Home() {
                 </motion.div>
               </div>
               <div className="panel-footer">
-                <div className="panel-footer-left"><i/> VENUS mindset</div>
+                <div className="panel-footer-left"><i/> Sonora mindset</div>
                 <div className="panel-footer-right">built on clarity</div>
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function Home() {
             ["UI/UX & Development", "Thiết kế và phát triển theo từng giai đoạn.", "Sản phẩm được xây dựng theo các vòng review để hai bên có thể kiểm soát tiến độ và phản hồi."],
             ["QA & Validation", "Kiểm tra trước khi sản phẩm đến tay người dùng.", "Testing, review và UAT dựa trên phạm vi đã thống nhất."],
             ["Deployment", "Đưa sản phẩm vào môi trường thực tế.", "Hệ thống được triển khai lên production sau khi hoàn thành các bước kiểm tra và nghiệm thu cần thiết."],
-            ["Maintenance & Support", "Đồng hành sau khi bàn giao.", "VENUS hỗ trợ xử lý vấn đề, bảo trì và tối ưu theo phạm vi hợp tác."],
+            ["Maintenance & Support", "Đồng hành sau khi bàn giao.", "Sonora hỗ trợ xử lý vấn đề, bảo trì và tối ưu theo phạm vi hợp tác."],
           ].map(([title, subtitle, text], index) => (
             <motion.article
               className="step"
@@ -363,9 +363,9 @@ export default function Home() {
             whileInView="visible"
             viewport={VP}
           >
-            <span className="split-panel__eyebrow">04 WHY VENUS</span>
+            <span className="split-panel__eyebrow">04 WHY SONORA</span>
             <h2 className="split-panel__headline">Built differently<br />from the<br /><span className="headline-highlight">start.</span></h2>
-            <p className="split-panel__supporting">VENUS ưu tiên cách phối hợp chuyên nghiệp: mục tiêu rõ, trách nhiệm rõ, cập nhật đều và bàn giao có cấu trúc. Đây là lớp nền để tạo dựng niềm tin từ lần làm việc đầu tiên.</p>
+            <p className="split-panel__supporting">Sonora ưu tiên cách phối hợp chuyên nghiệp: mục tiêu rõ, trách nhiệm rõ, cập nhật đều và bàn giao có cấu trúc. Đây là lớp nền để tạo dựng niềm tin từ lần làm việc đầu tiên.</p>
             <div className="split-panel__actions">
               <button className="button button--primary" type="button" onClick={() => showPrototypeToast("Trao đổi bài toán")}>Trao đổi bài toán <ArrowUpRight size={16} /></button>
               <button className="button button--ghost" type="button" onClick={() => scrollToSection("solutions")}>Xem cách làm việc</button>
@@ -383,7 +383,7 @@ export default function Home() {
             <div className="dark-browser-panel">
               <div className="panel-topbar">
                 <div className="panel-dots"><i/><i/><i/></div>
-                <div className="panel-title">why.venus</div>
+                <div className="panel-title">why.sonora</div>
               </div>
               <div className="panel-body">
                 <div className="panel-intro">Core values in every project</div>
@@ -425,9 +425,9 @@ export default function Home() {
           whileInView="visible"
           viewport={VP}
         >
-          <div className="brand-stamp"><Sparkles size={17} /> VENUS / IT PARTNER</div>
+          <div className="brand-stamp"><Sparkles size={17} /> SONORA / IT PARTNER</div>
           <h2>Have an idea?<br /><em>Let’s turn it into something real.</em></h2>
-          <button className="button button--light button--large" type="button" onClick={() => showPrototypeToast("Trao đổi với VENUS")}>Trao đổi với VENUS <ArrowUpRight size={18} /></button>
+          <button className="button button--light button--large" type="button" onClick={() => showPrototypeToast("Trao đổi với Sonora")}>Trao đổi với Sonora <ArrowUpRight size={18} /></button>
         </motion.div>
       </section>
 
@@ -440,7 +440,7 @@ export default function Home() {
       >
         <BrandMark inverse />
         <p>Technology built around your business.</p>
-        <div className="footer-links"><button type="button" onClick={() => scrollToSection("top")}>Lên đầu trang</button><span>© 2026 VENUS</span></div>
+        <div className="footer-links"><button type="button" onClick={() => scrollToSection("top")}>Lên đầu trang</button><span>© 2026 SONORA</span></div>
       </motion.footer>
     </main>
   );

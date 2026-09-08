@@ -57,49 +57,46 @@ export default function LogoMarquee() {
         }
 
         /* Khung ngoài: cắt tràn + gradient fade 2 mép */
+        /* Khung ngoài: cắt tràn + gradient fade 2 mép, vô hiệu hóa tương tác người dùng */
         .lm-viewport {
           overflow: hidden;
           position: relative;
           z-index: 1;
           -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
                   mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+          pointer-events: none;
+          user-select: none;
         }
 
         .lm-track {
           display: flex;
           align-items: center;
-          gap: 24px;
+          gap: 56px;
           width: max-content;
-          padding: 8px 0;
-          animation: lm-scroll 70s linear infinite;
+          padding: 16px 0;
+          animation: lm-scroll 60s linear infinite;
+          pointer-events: none;
         }
 
-        /* Card kính băng tinh thể (Frosted Crystal): nền sáng mờ sang trọng, tôn trọn nét chữ đen */
+        /* Logo item: không viền, không card, hòa vào nền tối */
         .lm-item {
           flex: 0 0 auto;
-        }
-        .lm-card {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 245, 255, 0.84) 100%);
-          border: 1px solid rgba(255, 255, 255, 0.7);
-          border-radius: 12px;
-          padding: 0 24px;
-          height: 72px;
-          backdrop-filter: blur(12px);
-          box-shadow: 0 4px 20px rgba(2, 6, 23, 0.45), 0 0 15px rgba(59, 130, 246, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-          cursor: default;
-          user-select: none;
+          pointer-events: none;
         }
 
-        /* Logo ảnh: hiển thị nguyên bản sắc nét */
+        /* Logo trắng tinh tế chạy liên tục trên nền tối, không tương tác */
         .lm-logo {
-          height: 44px;
+          height: 40px;
+          max-height: 44px;
+          max-width: 160px;
           width: auto;
+          object-fit: contain;
           display: block;
-          opacity: 0.95;
-          filter: none;
+          filter: brightness(0) invert(1);
+          opacity: 0.75;
           pointer-events: none;
           user-select: none;
           -webkit-user-drag: none;
@@ -107,15 +104,13 @@ export default function LogoMarquee() {
 
         /* Desktop */
         @media (min-width: 768px) {
-          .lm-card {
-            padding: 0 28px;
-            height: 80px;
-          }
           .lm-logo {
-            height: 54px;
+            height: 46px;
+            max-height: 50px;
+            max-width: 180px;
           }
           .lm-track {
-            gap: 28px;
+            gap: 64px;
           }
         }
 
@@ -195,17 +190,13 @@ export default function LogoMarquee() {
             letter-spacing: .18em;
             margin: 0 0 24px;
           }
-          .lm-card {
-            height: 64px;
-            padding: 0 18px;
-            border-radius: 10px;
-          }
           .lm-logo {
-            height: 38px;
+            height: 34px;
+            max-height: 38px;
           }
           .lm-track {
-            gap: 16px;
-            animation-duration: 55s;
+            gap: 36px;
+            animation-duration: 50s;
           }
           .lm-cta-wrap {
             margin-top: 24px;
@@ -223,16 +214,12 @@ export default function LogoMarquee() {
           .lm-section {
             padding: 42px 0;
           }
-          .lm-card {
-            height: 56px;
-            padding: 0 14px;
-            border-radius: 8px;
-          }
           .lm-logo {
-            height: 32px;
+            height: 28px;
+            max-height: 32px;
           }
           .lm-track {
-            gap: 12px;
+            gap: 28px;
           }
           .lm-jump-btn {
             font-size: 11px;
@@ -248,15 +235,13 @@ export default function LogoMarquee() {
         <div className="lm-track">
           {track.map((logo, i) => (
             <div className="lm-item" key={`${logo.name}-${i}`}>
-              <div className="lm-card">
-                <img
-                  className="lm-logo"
-                  src={logo.src}
-                  alt={logo.name}
-                  loading="lazy"
-                  aria-hidden={i >= ONE_LOOP.length}
-                />
-              </div>
+              <img
+                className="lm-logo"
+                src={logo.src}
+                alt={logo.name}
+                loading="lazy"
+                aria-hidden={i >= ONE_LOOP.length}
+              />
             </div>
           ))}
         </div>
